@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RuMah – Ruang Mahasiswa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-white: #FFFFFF;
+      --color-bg: #F8FAFC;
+      --color-primary: #E6F0FA;
+      --color-accent-buy: #187BCD;
+      --color-accent-sell: #008080;
+      --color-gray-light: #E2E8F0;
+      --color-gray: #94A3B8;
+      --color-gray-dark: #64748B;
+      --color-text: #334155;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background-color: var(--color-accent-buy);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #156bb5;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-sell {
+      background-color: var(--color-accent-sell);
+      color: white;
+    }
+
+    .btn-sell:hover {
+      background-color: #006666;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--color-accent-buy);
+      color: var(--color-accent-buy);
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: var(--color-accent-sell);
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .navbar {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent-buy);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: "🏠";
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--color-text);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--color-accent-buy);
+    }
+
+    .profile-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--color-accent-buy);
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #E6F0FA 0%, #FFFFFF 100%);
+      padding: 5rem 1.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: var(--color-gray-dark);
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .faculty-fip { background-color: #B0C4DE; color: #2c3e50; }
+    .faculty-ft { background-color: #00075D; color: white; }
+    .faculty-fik { background-color: #2D6A4F; color: white; }
+    .faculty-fis { background-color: #5D0D02; color: white; }
+    .faculty-fmipa { background-color: #FFEA00; color: #333; }
+    .faculty-fbs { background-color: #FF4D00; color: white; }
+    .faculty-fe { background-color: #A9A9A9; color: white; }
+
+    .faculty-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0.25rem;
+    }
+
+    .preview-blur {
+      filter: blur(4px);
+      position: relative;
+      opacity: 0.7;
+    }
+
+    .preview-blur::after {
+      content: "🔒 Dibeli untuk akses penuh";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      width: 80%;
+      text-align: center;
+    }
+
+    .balance-box {
+      background: #F0F8FF;
+      border-left: 4px solid var(--color-accent-sell);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+    }
+
+    .withdraw-summary {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--color-gray-light);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-sell);
+    }
+
+    .withdraw-info {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-gray-light);
+      font-size: 0.9rem;
+      color: var(--color-gray-dark);
+    }
+
+    .footer {
+      background: var(--color-text);
+      color: white;
+      padding: 3rem 1.5rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .footer-links a {
+      color: #CBD5E1;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1.1rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="main-navbar">
+    <div class="container navbar-container">
+      <a href="#" class="logo">RuMah</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#profil">Profil</a></li>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+      <div class="profile-btn" id="profile-button">U</div>
+    </div>
+  </nav>
+
+  <div id="login-page" class="container" style="padding: 5rem 0; text-align: center;">
+    <div class="card" style="max-width: 400px; margin: 0 auto;">
+      <h2 style="margin-bottom: 1.5rem;">Login ke RuMah</h2>
+      <input type="text" id="login-nim" placeholder="NIM" class="card" style="margin-bottom: 1rem; width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: var(--radius);">
+      <input type="password" id="login-pass" placeholder="Password" class="card" style="margin-bottom: 1.5rem; width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: var(--radius);">
+      <button class="btn btn-primary" style="width: 100%;" onclick="handleLogin()">Masuk</button>
+      <p style="margin-top: 1rem; font-size: 0.9rem;">Belum punya akun? <a href="#" style="color: var(--color-accent-buy);">Daftar</a></p>
+    </div>
+  </div>
+
+  <div id="home-page" class="hidden">
+    <section class="hero" id="home-section">
+      <div class="container">
+        <h1>Tugas = Skip. Nilai = Keep.<br>Dijamin Sip!</h1>
+        <p>Platform kami bersedia membantu Anda dalam penyelesaian tugas akademik.</p>
+        <button class="btn btn-primary" onclick="navigateTo('layanan-page')">Mulai Sekarang</button>
+      </div>
+    </section>
+
+    <section class="container" id="layanan-section">
+      <h2 class="section-title">Layanan Kami</h2>
+      <div class="grid-2">
+        <div class="card" onclick="navigateTo('jual-page')" style="cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📤</div>
+          <h3 style="color: var(--color-accent-sell);">Jual</h3>
+          <p>Jual tugas, presentasi, atau ringkasan akademik Anda ke mahasiswa lain.</p>
+          <small style="display: inline-block; margin-top: 1rem; color: var(--color-gray);">Mulai dari Rp10.000</small>
+        </div>
+        <div class="card" onclick="navigateTo('beli-page')" style="cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📥</div>
+          <h3 style="color: var(--color-accent-buy);">Beli</h3>
+          <p>Cari dan beli materi akademik sesuai kebutuhan Anda.</p>
+          <small style="display: inline-block; margin-top: 1rem; color: var(--color-gray);">Harga transparan</small>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="jual-page" class="hidden container" style="padding: 2rem 0;">
+    <h2 class="section-title">Jual Materi Akademik</h2>
+    
+    <div id="step-jenis" class="card">
+      <h3>Pilih Jenis Produk</h3>
+      <div class="grid-2" style="grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+        <div class="card" onclick="selectProductType('CJR')" style="text-align: center; cursor: pointer;">CJR</div>
+        <div class="card" onclick="selectProductType('CBR')" style="text-align: center; cursor: pointer;">CBR</div>
+        <div class="card" onclick="selectProductType('PPT')" style="text-align: center; cursor: pointer;">PPT</div>
+        <div class="card" onclick="selectProductType('Mini Riset')" style="text-align: center; cursor: pointer;">Mini Riset</div>
+        <div class="card" onclick="selectProductType('Rekayasa Ide')" style="text-align: center; cursor: pointer;">Rekayasa Ide</div>
+        <div class="card" onclick="selectProductType('PROYEK')" style="text-align: center; cursor: pointer;">PROYEK</div>
+      </div>
+    </div>
+
+    <div id="step-fakultas" class="card hidden">
+      <h3>Pilih Fakultas</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; margin-top: 1rem;">
+        <div class="faculty-tag faculty-fip" onclick="selectFaculty('FIP')">FIP</div>
+        <div class="faculty-tag faculty-ft" onclick="selectFaculty('FT')">FT</div>
+        <div class="faculty-tag faculty-fik" onclick="selectFaculty('FIK')">FIK</div>
+        <div class="faculty-tag faculty-fis" onclick="selectFaculty('FIS')">FIS</div>
+        <div class="faculty-tag faculty-fmipa" onclick="selectFaculty('FMIPA')">FMIPA</div>
+        <div class="faculty-tag faculty-fbs" onclick="selectFaculty('FBS')">FBS</div>
+        <div class="faculty-tag faculty-fe" onclick="selectFaculty('FE')">FE</div>
+      </div>
+    </div>
+
+    <div id="step-prodi" class="card hidden">
+      <h3 id="prodi-header">Pilih Program Studi</h3>
+      <div id="prodi-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; margin-top: 1rem;"></div>
+    </div>
+
+    <div id="step-semester" class="card hidden">
+      <h3>Pilih Semester</h3>
+      <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-top: 1rem;">
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(1)">Semester 1</div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(2)">Semester 2</div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(3)">Semester 3</div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(4)">Semester 4</div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(5)">Semester 5</div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(6)">Semester 6</div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="selectSemester(7)">Semester 7</div>
+      </div>
+    </div>
+
+    <div id="step-upload" class="card hidden">
+      <h3>Upload Materi Anda</h3>
+      <div style="margin-top: 1.5rem;">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Judul</label>
+          <input type="text" id="upload-title" required placeholder="Contoh: CJR Metode Penelitian" class="card" style="width: 100%; padding: 0.75rem;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Mata Kuliah</label>
+          <input type="text" id="upload-course" required placeholder="Metode Penelitian" class="card" style="width: 100%; padding: 0.75rem;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Abstrak (max 300 karakter)</label>
+          <textarea id="upload-abstract" required maxlength="300" placeholder="Ringkasan singkat tugas..." class="card" style="width: 100%; padding: 0.75rem; height: 100px;"></textarea>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Upload File (.pdf, .ppt, .doc)</label>
+          <input type="file" id="upload-file" accept=".pdf,.ppt,.pptx,.doc,.docx" required class="card" style="width: 100%; padding: 0.5rem;">
+          <small style="display: block; margin-top: 0.5rem; color: var(--color-gray);">Maksimal 10 MB</small>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Harga Jual (Rp)</label>
+          <input type="number" id="upload-price" min="10000" max="100000" value="35000" required class="card" style="width: 100%; padding: 0.75rem;">
+          <small id="earning-note" style="display: block; margin-top: 0.5rem; color: var(--color-gray);">
+            Platform fee 30% → Anda dapat <strong>Rp24.500</strong>
+          </small>
+        </div>
+        <button type="button" class="btn btn-sell" onclick="submitUpload()">Kirim untuk Review</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="beli-page" class="hidden container" style="padding: 2rem 0; text-align: center;">
+    <button class="btn btn-outline" onclick="navigateTo('home-page')" style="margin-bottom: 1.5rem;">← Kembali ke Home</button>
+    <h2 class="section-title">Daftar Produk Tersedia</h2>
+    <div class="card" onclick="navigateTo('beli-detail-page')" style="cursor: pointer; max-width: 600px; margin: 0 auto;">
+      <h3>CJR Metode Penelitian</h3>
+      <div style="margin: 1rem 0;">
+        <span class="faculty-tag faculty-fip">FIP</span>
+        <span class="faculty-tag" style="background: #dbeafe;">PGSD</span>
+        <span class="faculty-tag" style="background: #dbeafe;">Semester 3</span>
+      </div>
+      <p><strong>Mata Kuliah:</strong> Metode Penelitian</p>
+      <p style="color: var(--color-gray);">Ringkasan CJR tentang penerapan metode kualitatif...</p>
+      <button class="btn btn-sell" style="margin-top: 1rem;">Lihat Detail & Beli – Rp35.000</button>
+    </div>
+  </div>
+
+  <div id="beli-detail-page" class="hidden container" style="padding: 2rem 0;">
+    <button class="btn btn-outline" onclick="navigateTo('beli-page')" style="margin-bottom: 1.5rem;">← Kembali ke Daftar</button>
+    
+    <div class="card">
+      <h2>CJR Metode Penelitian</h2>
+      <div style="margin: 1rem 0;">
+        <span class="faculty-tag faculty-fip">FIP</span>
+        <span class="faculty-tag" style="background: #dbeafe;">PGSD</span>
+        <span class="faculty-tag" style="background: #dbeafe;">Semester 3</span>
+      </div>
+      <p><strong>Mata Kuliah:</strong> Metode Penelitian</p>
+      <p><strong>Abstrak:</strong> Laporan CJR tentang penerapan metode penelitian kualitatif dalam studi kasus di SD Negeri 1...</p>
+      
+      <h3 style="margin: 1.5rem 0 1rem;">Preview File</h3>
+      <div style="border: 1px solid #eee; border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem;">
+        <div style="padding: 1rem; background: #f8fafc; font-weight: 600;">Halaman 1 (PDF)</div>
+        <div style="padding: 2rem; background: white; text-align: center;">📄 Isi halaman 1 — Tampil penuh</div>
+        
+        <div style="padding: 1rem; background: #f8fafc; font-weight: 600;">Halaman 2</div>
+        <div class="preview-blur" style="padding: 2rem; background: white; text-align: center;">📄 Isi halaman 2 — Terenkripsi</div>
+        
+        <div style="padding: 1rem; background: #f8fafc; font-weight: 600;">Halaman 3</div>
+        <div style="padding: 2rem; background: white; text-align: center;">📄 Isi halaman 3 — Tampil penuh</div>
+        
+        <div style="padding: 1rem; background: #f8fafc; font-weight: 600;">Halaman 4</div>
+        <div class="preview-blur" style="padding: 2rem; background: white; text-align: center;">📄 Isi halaman 4 — Terenkripsi</div>
+        
+        <div style="padding: 1rem 1rem 0; font-size: 0.85rem; color: var(--color-gray);">
+          • Halaman ganjil: tampil penuh<br>
+          • Halaman genap (mulai hal. 6+): dienkripsi<br>
+          • File asli hanya tersedia setelah pembelian
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-sell" style="flex: 1; min-width: 200px;" onclick="confirmPurchase()">Beli Sekarang – Rp35.000</button>
+        <button class="btn btn-outline" style="flex: 1; min-width: 150px;">Tambah ke Wishlist</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="profil-page" class="hidden container" style="padding: 2rem 0;">
+    <h2 class="section-title">Profil Saya</h2>
+    
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+        <div class="profile-btn" style="width: 60px; height: 60px; font-size: 1.5rem;">U</div>
+        <div>
+          <h3>Udin Saputra</h3>
+          <p style="color: var(--color-gray);">NIM: 230101001</p>
+        </div>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+        <div>
+          <strong>Prodi</strong><br>
+          <span>PGSD</span>
+        </div>
+        <div>
+          <strong>Fakultas</strong><br>
+          <span class="faculty-tag faculty-fip">FIP</span>
+        </div>
+        <div>
+          <strong>Email</strong><br>
+          <span>udin@example.com</span>
+        </div>
+        <div>
+          <strong>No. WA</strong><br>
+          <span>0812-3456-7890</span>
+        </div>
+      </div>
+      
+      <div class="balance-box">
+        <h3>Saldo E-Money</h3>
+        <p style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0;">Rp 105.000</p>
+        <p style="margin: 0.5rem 0; font-size: 0.9rem;">⚠️ Minimal penarikan: Rp 20.000</p>
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+          <button class="btn btn-sell" onclick="navigateTo('tarik-page')">Tarik Dana</button>
+          <button class="btn btn-outline" onclick="navigateTo('riwayat-penarikan-page')">Riwayat Penarikan</button>
+          <button class="btn btn-outline" onclick="navigateTo('riwayat-penjualan-page')">Riwayat Penjualan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tarik-page" class="hidden container" style="padding: 2rem 0;">
+    <h2 class="section-title">Tarik Dana</h2>
+    
+    <div class="balance-box">
+      <h3>Saldo Tersedia</h3>
+      <p style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0;">Rp 105.000</p>
+      <p style="margin: 0.5rem 0; font-size: 0.9rem;">
+        💡 Dana berasal dari hasil penjualan bersih (setelah potongan 30% platform)<br>
+        ⚠️ Minimal penarikan: Rp 20.000
+      </p>
+    </div>
+
+    <div class="card">
+      <div style="margin-bottom: 1.5rem;">
+        <h3>Rekening Tujuan</h3>
+        <div style="margin-top: 0.75rem;">
+          <label style="display: block; margin: 0.5rem 0;">
+            <input type="radio" name="rekening" value="bca" checked> BCA • • •7890 • An. Udin Saputra
+          </label>
+          <label style="display: block; margin: 0.5rem 0;">
+            <input type="radio" name="rekening" value="mandiri"> Mandiri • • •4321 • An. Udin Saputra
+          </label>
+          <label style="display: block; margin: 0.5rem 0; color: var(--color-accent-sell);">
+            <input type="radio" name="rekening" value="new"> + Tambah Rekening Baru
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <h3>Jumlah Penarikan (Rp)</h3>
+        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+          <input type="number" id="withdraw-amount" min="20000" value="100000" class="card" style="flex: 1; padding: 0.75rem;">
+          <button type="button" class="btn btn-link" onclick="fillMaxAmount()">Tarik Semua Saldo</button>
+        </div>
+      </div>
+
+      <div class="withdraw-summary">
+        <h3>Ringkasan</h3>
+        <div class="summary-row">
+          <span>Jumlah Penarikan</span>
+          <span id="amount-display">Rp 100.000</span>
+        </div>
+        <div class="summary-row">
+          <span>Biaya Platform</span>
+          <span style="color: #ef4444;">(Sudah dipotong saat penjualan)</span>
+        </div>
+        <div class="summary-row">
+          <span>Jumlah Diterima</span>
+          <span>Rp 100.000</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-sell" style="width: 100%;" onclick="processWithdraw()">Konfirmasi Penarikan →</button>
+
+      <div class="withdraw-info">
+        <p>✅ Permintaan Anda akan diproses dalam 1–3 hari kerja.<br>
+        Dana akan ditransfer ke rekening yang Anda pilih.</p>
+        <p><a href="#" class="link" onclick="navigateTo('riwayat-penarikan-page')">Lihat Riwayat Penarikan →</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="riwayat-penarikan-page" class="hidden container" style="padding: 2rem 0;">
+    <h2 class="section-title">Riwayat Penarikan</h2>
+    
+    <div class="card">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="text-align: left; border-bottom: 2px solid var(--color-gray-light);">
+            <th>Tanggal</th>
+            <th>Rekening</th>
+            <th>Jumlah</th>
+            <th>Diterima</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-gray-light);">
+            <td>10 Nov 2025</td>
+            <td>BCA • • •7890</td>
+            <td>Rp 100.000</td>
+            <td>Rp 100.000</td>
+            <td><span style="color: var(--color-success);">✅ Berhasil</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-gray-light);">
+            <td>05 Nov 2025</td>
+            <td>Mandiri • • •4321</td>
+            <td>Rp 25.000</td>
+            <td>Rp 25.000</td>
+            <td><span style="color: var(--color-warning);">⏳ Diproses</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="riwayat-penjualan-page" class="hidden container" style="padding: 2rem 0;">
+    <h2 class="section-title">Riwayat Penjualan</h2>
+    
+    <div class="card">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="text-align: left; border-bottom: 2px solid var(--color-gray-light);">
+            <th>Judul</th>
+            <th>Harga</th>
+            <th>Tgl Terjual</th>
+            <th>Dana</th>
+            <th>Status Ulang</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-gray-light);">
+            <td>CJR Metode Penelitian</td>
+            <td>Rp 50.000</td>
+            <td>10 Nov 2025</td>
+            <td>Rp 35.000</td>
+            <td><span style="color: var(--color-warning);">⏳ 24 Nov 2025</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-gray-light);">
+            <td>PPT Sistem Pernapasan</td>
+            <td>Rp 30.000</td>
+            <td>05 Nov 2025</td>
+            <td>Rp 21.000</td>
+            <td><span style="color: var(--color-success);">✅ Tersedia</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <a href="#" class="logo" style="color: white; font-size: 2rem;">RuMah</a>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Ruang Mahasiswa – Bantu Ringankan Beban Akademik</p>
+      </div>
+      
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#layanan">Layanan</a>
+        <a href="#profil">Profil</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#kontak">Kontak</a>
+        <a href="#rules">Aturan</a>
+      </div>
+      
+      <div class="social-icons">
+        <a href="https://instagram.com/ruang.mahasiswa" class="social-icon">IG</a>
+        <a href="mailto:support@rumah.ac.id" class="social-icon">@</a>
+      </div>
+      
+      <p style="text-align: center; margin-top: 2rem; opacity: 0.7; font-size: 0.9rem;">
+        © 2025 RuMah. All rights reserved.<br>
+        <small>Platform ini tidak mendukung plagiarisme. Gunakan secara bijak untuk referensi belajar.</small>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Data prodi
+    const PRODI_DATA = {
+      'FIP': ['PGSD', 'PGPAUD', 'BK', 'PLS/PENMAS'],
+      'FT': ['PTB', 'PTM', 'PTE', 'PTO', 'PTIK', 'P. Tataboga', 'P. Tatabusana', 'P. Tatarías', 'T. Sipil', 'T. Elektro', 'Arsitektur', 'Gizi', 'T. Mesin', 'MK'],
+      'FIK': ['PKO', 'PJKR', 'IKOR'],
+      'FIS': ['PPKn', 'P. Sejarah', 'P. Geografi', 'P. Antropologi', 'HB', 'SIG'],
+      'FMIPA': ['P. Matematika', 'Matematika', 'P. Biologi', 'Biologi', 'P. Fisika', 'Fisika', 'P. Kimia', 'Kimia', 'P. IPA', 'Ilkom', 'Statistika'],
+      'FBS': ['PBSI', 'PBI', 'PB. Prancis', 'PB. Jerman', 'PSR', 'PST', 'PSM', 'Sasindo', 'SasIng', 'SPJ'],
+      'FE': ['P. Ekonomi', 'P. Akuntansi', 'P. ADP', 'P. Bisnis', 'Akuntansi', 'Manajemen', 'Ilmu Ekonomi', 'Bisdig', 'KWU']
+    };
+
+    let currentProductType = '';
+    let currentFaculty = '';
+
+    // Navigation
+    function navigateTo(pageId) {
+      document.querySelectorAll('[id$="-page"]').forEach(el => {
+        el.classList.add('hidden');
+      });
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    // Login
+    function handleLogin() {
+      const nim = document.getElementById('login-nim').value.trim();
+      if (nim) {
+        document.getElementById('login-page').classList.add('hidden');
+        navigateTo('home-page');
+        document.querySelector('.profile-btn').textContent = nim.slice(-2);
+      } else {
+        alert('Harap masukkan NIM.');
+      }
+    }
+
+    // Jual Steps
+    function selectProductType(type) {
+      currentProductType = type;
+      document.getElementById('step-jenis').classList.add('hidden');
+      document.getElementById('step-fakultas').classList.remove('hidden');
+    }
+
+    function selectFaculty(fakultas) {
+      currentFaculty = fakultas;
+      document.getElementById('step-fakultas').classList.add('hidden');
+      
+      const container = document.getElementById('prodi-container');
+      container.innerHTML = '';
+      
+      PRODI_DATA[fakultas].forEach(prodi => {
+        const div = document.createElement('div');
+        div.className = 'faculty-tag';
+        div.textContent = prodi;
+        div.style.backgroundColor = getFacultyColor(fakultas);
+        div.style.color = getFacultyTextColor(fakultas);
+        div.style.cursor = 'pointer';
+        div.addEventListener('click', () => selectProdi(prodi));
+        container.appendChild(div);
+      });
+      
+      document.getElementById('prodi-header').textContent = `Pilih Program Studi (${fakultas})`;
+      document.getElementById('step-prodi').classList.remove('hidden');
+    }
+
+    function getFacultyColor(fakultas) {
+      const colors = {
+        'FIP': '#B0C4DE',
+        'FT': '#00075D',
+        'FIK': '#2D6A4F',
+        'FIS': '#5D0D02',
+        'FMIPA': '#FFEA00',
+        'FBS': '#FF4D00',
+        'FE': '#A9A9A9'
+      };
+      return colors[fakultas] || '#ccc';
+    }
+
+    function getFacultyTextColor(fakultas) {
+      return fakultas === 'FMIPA' || fakultas === 'FT' ? '#333' : 'white';
+    }
+
+    function selectProdi(prodi) {
+      document.getElementById('step-prodi').classList.add('hidden');
+      document.getElementById('step-semester').classList.remove('hidden');
+    }
+
+    function selectSemester(semester) {
+      document.getElementById('step-semester').classList.add('hidden');
+      document.getElementById('step-upload').classList.remove('hidden');
+      
+      const priceInput = document.getElementById('upload-price');
+      priceInput.addEventListener('input', updateEarnings);
+      updateEarnings();
+    }
+
+    function updateEarnings() {
+      const price = parseInt(document.getElementById('upload-price').value) || 0;
+      const earning = Math.round(price * 0.7);
+      document.getElementById('earning-note').innerHTML = 
+        `Platform fee 30% → Anda dapat <strong>Rp${earning.toLocaleString('id-ID')}</strong>`;
+    }
+
+    function submitUpload() {
+      const title = document.getElementById('upload-title').value.trim();
+      if (!title) {
+        alert('Harap isi judul.');
+        return;
+      }
+      alert('✅ File berhasil dikirim untuk review!\n\nStatus: Menunggu persetujuan moderator.');
+      navigateTo('profil-page');
+    }
+
+    // Tarik Dana
+    function fillMaxAmount() {
+      document.getElementById('withdraw-amount').value = 105000;
+      document.getElementById('amount-display').textContent = 'Rp 105.000';
+    }
+
+    document.getElementById('withdraw-amount').addEventListener('input', function() {
+      const val = this.value ? parseInt(this.value) : 0;
+      document.getElementById('amount-display').textContent = `Rp ${val.toLocaleString('id-ID')}`;
+    });
+
+    function processWithdraw() {
+      const amount = parseInt(document.getElementById('withdraw-amount').value);
+      if (isNaN(amount) || amount < 20000) {
+        alert('❌ Minimal penarikan adalah Rp20.000.');
+        return;
+      }
+      if (amount > 105000) {
+        alert('❌ Saldo tidak mencukupi.');
+        return;
+      }
+      alert(`✅ Permintaan penarikan Rp${amount.toLocaleString('id-ID')} telah dikirim!\n\nDana akan masuk rekening dalam 1–3 hari kerja.`);
+      navigateTo('riwayat-penarikan-page');
+    }
+
+    function confirmPurchase() {
+      if (confirm('Apakah Anda yakin ingin membeli file ini seharga Rp35.000?')) {
+        alert('✅ Pembelian berhasil!\n\nFile asli siap diunduh di halaman Profil → Riwayat Pembelian.');
+        navigateTo('profil-page');
+      }
+    }
+
+    // Profile button
+    document.getElementById('profile-button').addEventListener('click', () => {
+      navigateTo('profil-page');
+    });
+
+    // Auto-login for demo
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('login-nim').value = '230101001';
+        document.getElementById('login-pass').value = 'password';
+        handleLogin();
+      }, 500);
+    });
+  </script>
+</body>
+</html>
+
